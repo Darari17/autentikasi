@@ -28,6 +28,7 @@ const login = () => {
     dispatch(getUser());
   }, [dispatch]);
 
+  // bisa pake handlelogin 1 atau 2 terserah, sama aja.
   const handleLogin1 = async (data) => {
     try {
       const result = await dispatch(loginUser(data)).unwrap(); // unwrap untuk mendapatkan hasil atau melempar error, jadi ga perlu result.meta.blablabla...

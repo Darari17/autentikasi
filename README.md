@@ -5,3 +5,5 @@
 5. axios
 6. react-hook-form
 7. react-router-dom
+
+- Digunakana hanya untuk tugas saja. tanpa token autentikasi.

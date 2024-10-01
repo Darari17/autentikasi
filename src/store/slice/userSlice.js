@@ -1,6 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosIns } from "../../lib/axios";
 
+export const getUser = createAsyncThunk("user/getUser", async () => {
+  const response = await axiosIns.get("/users");
+  return response.data;
+});
+
 export const registerUser = createAsyncThunk(
   "user/registerUser",
   async (userData) => {
@@ -42,6 +47,19 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // simpan data di redux, karena menggunakan fake API
+      .addCase(getUser.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.status = "success";
+        state.users = action.payload;
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+
       // untuk register
       .addCase(registerUser.pending, (state) => {
         state.status = "loading";

@@ -6,10 +6,10 @@ import {
   CardHeader,
   Input,
 } from "@nextui-org/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../store/slice/userSlice";
+import { getUser, loginUser } from "../store/slice/userSlice";
 import { useNavigate } from "react-router-dom";
 
 const login = () => {
@@ -23,7 +23,22 @@ const login = () => {
     },
   });
 
-  const handleLogin = (data) => {
+  // ini buat ambil data user, trus di simpan di dalam redux
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
+
+  const handleLogin1 = async (data) => {
+    try {
+      const result = await dispatch(loginUser(data)).unwrap(); // unwrap untuk mendapatkan hasil atau melempar error, jadi ga perlu result.meta.blablabla...
+      alert("Login berhasil");
+      navigate("/");
+    } catch (error) {
+      alert(`Login gagal: ${error.message}`);
+    }
+  };
+
+  const handleLogin2 = (data) => {
     dispatch(loginUser(data)).then((result) => {
       if (result.meta.requestStatus === "fulfilled") {
         alert("Login berhasil");
@@ -36,7 +51,7 @@ const login = () => {
     <div className="h-screen flex justify-center items-center">
       <Card className="w-[400px] h-[400px]">
         <CardHeader>Login</CardHeader>
-        <form onSubmit={handleSubmit(handleLogin)}>
+        <form onSubmit={handleSubmit(handleLogin1)}>
           <CardBody>
             <Controller
               name="username"

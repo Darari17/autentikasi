@@ -17,6 +17,12 @@
       "username": "faridrd",
       "email": "farid@mail.com",
       "password": "password"
+    },
+    {
+      "id": "28c7",
+      "username": "admin",
+      "email": "admin@mail.com",
+      "password": "password"
     }
   ]
 }
